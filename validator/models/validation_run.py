@@ -43,6 +43,14 @@ class ValidationRun(models.Model):
         (CLIMATOLOGY, 'Climatology'),
         )
 
+    ## metrics groups
+    INTERCOMP = 'intercomp'
+    TC_INTERCOMP = 'tc'
+    METRICS_GROUPS = (
+        (INTERCOMP, 'Basic Intercomparison'),
+        (TC_INTERCOMP, 'Triple Collocation')
+    )
+
     ## fields
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
@@ -59,6 +67,7 @@ class ValidationRun(models.Model):
 
     scaling_ref = models.ForeignKey(to=DatasetConfiguration, on_delete=models.SET_NULL, related_name='scaling_ref_validation_run', null=True)
     scaling_method = models.CharField(max_length=20, choices=SCALING_METHODS, default=MEAN_STD)
+    metrics_group = models.CharField(max_length=30, choices=METRICS_GROUPS, default=INTERCOMP)
     interval_from = models.DateTimeField(null=True)
     interval_to = models.DateTimeField(null=True)
     anomalies = models.CharField(max_length=20, choices=ANOMALIES_METHODS, default=NO_ANOM)
@@ -104,6 +113,9 @@ class ValidationRun(models.Model):
                 if value is None:
                     affected_fields[key] = 'For spatial subsetting, please set all bounding box coordinates.'
             raise ValidationError(affected_fields)
+
+        if self.metrics_group is None:
+            raise ValidationError({'metrics_group': 'Must select a metrics group to load the metrics calculator for.'})
 
     def __str__(self):
         return "id: {}, user: {}, start: {} )".format(self.id, self.user, self.start_time)

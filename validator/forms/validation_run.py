@@ -26,6 +26,7 @@ class ValidationRunForm(forms.ModelForm):
             'min_lon',
             'max_lat',
             'max_lon',
+            'metrics_group'
             ]
 
     scaling_ref = forms.fields.ChoiceField(choices=[(ValidationRun.SCALE_TO_REF, 'Reference'), (ValidationRun.SCALE_TO_DATA, 'Data'), ])

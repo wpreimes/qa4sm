@@ -10,7 +10,7 @@ from dateutil.tz import tzlocal
 from pytz import UTC
 from django.conf import settings
 from netCDF4 import Dataset
-from pytesmo.validation_framework.metric_calculators import IntercomparisonMetrics, get_dataset_names
+from pytesmo.validation_framework.metric_calculators import IntercomparisonMetrics, TCMetrics, get_dataset_names
 from pytesmo.validation_framework.results_manager import netcdf_results_manager
 from pytesmo.validation_framework.validation import Validation
 
@@ -137,7 +137,10 @@ def create_pytesmo_validation(validation_run):
 
     datamanager = DataManager(datasets, ref_name=ref_name, period=period)
     ds_names = get_dataset_names(datamanager.reference_name, datamanager.datasets, n=ds_num)
-    metrics = IntercomparisonMetrics(dataset_names=ds_names, other_names=['k{}'.format(i + 1) for i in range(ds_num-1)])
+    if len(ds_names) >= 3 and (validation_run.metrics_group == 'tc'):
+        metrics = TCMetrics(dataset_names=ds_names, other_names=['k{}'.format(i + 1) for i in range(ds_num-1)])
+    else:
+        metrics = IntercomparisonMetrics(dataset_names=ds_names, other_names=['k{}'.format(i + 1) for i in range(ds_num-1)])
 
     val = Validation(
         datasets=datamanager,
