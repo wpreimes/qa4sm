@@ -163,7 +163,7 @@ def generate_overview_map(validation_run, outfolder, metric, label, values, dc1,
 #         lons_map = np.arange(-179.875, 180, 0.25)
         values_map = np.empty((len(lats_map), len(lons_map)))
         values_map[:] = np.nan
-        
+
         for i in range(0, len(values)):
             values_map[np.where(lats_map == lats[i])[0][0]][np.where(lons_map == lons[i])[0][0]] = values[i]
 

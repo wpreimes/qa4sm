@@ -202,11 +202,11 @@ class TestValidation(TestCase):
         # check diagrams
         boxplot_pngs = [ x for x in os.listdir(outdir) if fnmatch.fnmatch(x, 'boxplot*.png')]
         self.__logger.debug(boxplot_pngs)
-        assert len(boxplot_pngs) == 12
+        assert len(boxplot_pngs) == 13
 
         overview_pngs = [ x for x in os.listdir(outdir) if fnmatch.fnmatch(x, 'overview*.png')]
         self.__logger.debug(overview_pngs)
-        assert len(overview_pngs) == 12 * (run.dataset_configurations.count() - 1)
+        assert len(overview_pngs) == 13 * (run.dataset_configurations.count() - 1)
 
     ## delete output of test validations, clean up after ourselves
     def delete_run(self, run):
@@ -725,7 +725,6 @@ class TestValidation(TestCase):
 
         # copy our netcdf data file there and link it in the validation object
         # then generate the graphs
-
         shutil.copy(infile1, path.join(run_dir, 'results.nc'))
         val.set_outfile(v, run_dir)
         v.save()
@@ -733,11 +732,11 @@ class TestValidation(TestCase):
 
         boxplot_pngs = [ x for x in os.listdir(run_dir) if fnmatch.fnmatch(x, 'boxplot*.png')]
         self.__logger.debug(boxplot_pngs)
-        assert len(boxplot_pngs) == 12
+        assert len(boxplot_pngs) == 13
 
         overview_pngs = [ x for x in os.listdir(run_dir) if fnmatch.fnmatch(x, 'overview*.png')]
         self.__logger.debug(overview_pngs)
-        assert len(overview_pngs) == 12 * (v.dataset_configurations.count() - 1)
+        assert len(overview_pngs) == 13 * (v.dataset_configurations.count() - 1)
 
         # remove results from first test and recreate dir
         shutil.rmtree(run_dir)
@@ -754,16 +753,15 @@ class TestValidation(TestCase):
 
         boxplot_pngs = [ x for x in os.listdir(run_dir) if fnmatch.fnmatch(x, 'boxplot*.png')]
         self.__logger.debug(boxplot_pngs)
-        assert len(boxplot_pngs) == 12
+        assert len(boxplot_pngs) == 13
 
         overview_pngs = [ x for x in os.listdir(run_dir) if fnmatch.fnmatch(x, 'overview*.png')]
         self.__logger.debug(overview_pngs)
-        assert len(overview_pngs) == 12 * (v.dataset_configurations.count() - 1)
+        assert len(overview_pngs) == 13 * (v.dataset_configurations.count() - 1)
 
         # remove results from first test and recreate dir
         shutil.rmtree(run_dir)
         val.mkdir_if_not_exists(run_dir)
-
         # do the same for the other netcdf file
 
         shutil.copy(infile3, path.join(run_dir, 'results.nc'))
@@ -775,11 +773,11 @@ class TestValidation(TestCase):
 
         boxplot_pngs = [ x for x in os.listdir(run_dir) if fnmatch.fnmatch(x, 'boxplot*.png')]
         self.__logger.debug(boxplot_pngs)
-        assert len(boxplot_pngs) == 12
+        assert len(boxplot_pngs) == 13
 
         overview_pngs = [ x for x in os.listdir(run_dir) if fnmatch.fnmatch(x, 'overview*.png')]
         self.__logger.debug(overview_pngs)
-        assert len(overview_pngs) == 12 * (v.dataset_configurations.count() - 1)
+        assert len(overview_pngs) == 13 * (v.dataset_configurations.count() - 1)
 
 
         self.delete_run(v)
