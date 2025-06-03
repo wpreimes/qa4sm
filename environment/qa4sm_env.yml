@@ -1,4 +1,6 @@
 name: qa4sm
+variables:
+  PIP_USE_PEP517: true
 channels:
   - conda-forge
   - defaults
